@@ -5,13 +5,15 @@ import {
   CreateDateColumn,
   ManyToMany,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { UserEntity } from 'src/user/users.entity';
+import { CommentEntity } from 'src/comment/comment.entity';
 
 @Entity('confes')
 export class ConfessEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  confess_id: string;
 
   @Column('title')
   title: string;
@@ -30,4 +32,10 @@ export class ConfessEntity {
     user => user.confes,
   )
   user: UserEntity;
+
+  @OneToMany(
+    type => CommentEntity,
+    comment => comment.comment_id,
+  )
+  comments: CommentEntity[];
 }

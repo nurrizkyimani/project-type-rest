@@ -6,6 +6,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { UserEntity } from 'src/user/users.entity';
+import { ConfessEntity } from 'src/confess/confess.entity';
 
 @Entity('comment')
 export class CommentEntity {
@@ -20,4 +21,10 @@ export class CommentEntity {
     user => user.comments,
   )
   user: UserEntity;
+
+  @ManyToOne(
+    type => ConfessEntity,
+    confess => confess.confess_id,
+  )
+  confess: ConfessEntity;
 }
