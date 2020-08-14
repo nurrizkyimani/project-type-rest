@@ -1,24 +1,22 @@
-import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryColumn, Column, OneToMany, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { ConfessEntity } from 'src/confess/confess.entity';
 import { CommentEntity } from 'src/comment/comment.entity';
 
 @Entity('user')
 export class UserEntity {
-  @PrimaryColumn()
-  id: string;
+	@PrimaryGeneratedColumn('uuid') id: string;
 
-  @Column('name')
-  name: string;
+	@CreateDateColumn() date: Date;
 
-  @OneToMany(
-    type => ConfessEntity,
-    confes => confes.user,
-  )
-  confes: ConfessEntity[];
+	@Column({
+		unique: true,
+		type: 'text'
+	})
+	username: string;
 
-  @OneToMany(
-    type => CommentEntity,
-    comment => comment.comment_id,
-  )
-  comments: CommentEntity[];
+	@OneToMany((type) => ConfessEntity, (confes) => confes.author)
+	confes: ConfessEntity[];
+
+	@OneToMany((type) => CommentEntity, (comment) => comment.comment_id)
+	comments: CommentEntity[];
 }
