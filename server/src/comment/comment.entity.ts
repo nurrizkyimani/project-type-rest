@@ -1,5 +1,5 @@
-import { Entity, PrimaryColumn, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinTable } from 'typeorm';
-import { UserEntity } from 'src/user/users.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinTable } from 'typeorm';
+import { UserEntity } from 'src/users/users.entity';
 import { ConfessEntity } from 'src/confess/confess.entity';
 
 @Entity('comment')
