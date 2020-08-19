@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToMany, M
 import { CommentEntity } from 'src/comment/comment.entity';
 import { UserEntity } from 'src/users/users.entity';
 
-@Entity('confes')
+@Entity('confess')
 export class ConfessEntity {
 	@PrimaryGeneratedColumn('uuid') confess_id: string;
 
@@ -15,9 +15,9 @@ export class ConfessEntity {
 
 	@Column('boolean') is_publish: boolean;
 
-	@ManyToOne((type) => UserEntity, (author) => author.confes)
+	@ManyToOne((type) => UserEntity, (author) => author.confess)
 	author: UserEntity;
 
-	@OneToMany((type) => CommentEntity, (comment) => comment.confess)
+	@OneToMany((type) => CommentEntity, (comment) => comment.confess, { cascade: true })
 	comments: CommentEntity[];
 }

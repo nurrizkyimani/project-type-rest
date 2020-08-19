@@ -4,13 +4,13 @@ import { ConfessEntity } from 'src/confess/confess.entity';
 
 @Entity('comment')
 export class CommentEntity {
-	@PrimaryGeneratedColumn('uuid') comment_id: string;
+	@PrimaryGeneratedColumn('uuid') id: string;
 
 	@CreateDateColumn() created: Date;
 
-	@Column('text') comment_each: string;
+	@Column('text') comment: String;
 
-	@ManyToOne((type) => UserEntity, (user) => user.comments)
+	@ManyToOne((type) => UserEntity)
 	@JoinTable()
 	author: UserEntity;
 

@@ -14,9 +14,6 @@ export class UserEntity {
 	})
 	username: string;
 
-	@OneToMany((type) => ConfessEntity, (confes) => confes.author)
-	confes: ConfessEntity[];
-
-	@OneToMany((type) => CommentEntity, (comment) => comment.comment_id)
-	comments: CommentEntity[];
+	@OneToMany((type) => ConfessEntity, (confess) => confess.author)
+	confess: ConfessEntity[];
 }

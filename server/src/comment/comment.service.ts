@@ -21,10 +21,6 @@ export class CommentService {
 	async createComment(confessId: string, userId: string, data: commentDTO) {
 		const confess = this.confessRepository.findOne({ where: { confess_id: confessId } });
 		const user = this.userRepository.findOne({ where: { id: userId } });
-
-		const comment_one = await this.commentRepository.create({});
-		await this.commentRepository.save(comment_one);
-		return comment_one;
 	}
 
 	async deleteComment(id: string, userId: string) {
