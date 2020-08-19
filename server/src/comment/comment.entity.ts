@@ -10,7 +10,7 @@ export class CommentEntity {
 
 	@Column('text') comment_each: string;
 
-	@ManyToOne((type) => UserEntity)
+	@ManyToOne((type) => UserEntity, (user) => user.comments)
 	@JoinTable()
 	author: UserEntity;
 
