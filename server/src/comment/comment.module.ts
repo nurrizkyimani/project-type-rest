@@ -9,8 +9,8 @@ import { UserEntity } from 'src/users/users.entity';
 import { UsersService } from 'src/users/users.service';
 
 @Module({
-	imports: [ TypeOrmModule.forRoot(), TypeOrmModule.forFeature([ CommentEntity, ConfessEntity, UserEntity ]) ],
-	providers: [ CommentService, UsersService, ConfessService ],
+	imports: [ TypeOrmModule.forFeature([ CommentEntity, ConfessEntity, UserEntity ]) ],
+	providers: [ CommentService ],
 	controllers: [ CommentController ],
 	exports: [ TypeOrmModule ]
 })

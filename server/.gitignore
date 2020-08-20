@@ -195,3 +195,7 @@ ormconfig.env
 ormconfig.json
 
 just.env
+
+serviceAccountKey.json
+
+.DS_Store
