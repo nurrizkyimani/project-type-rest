@@ -18,21 +18,22 @@ import { UsersModule } from './users/users.module';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { UserEntity } from './users/users.entity';
-import { databaseProviders } from './database.providers';
 
 @Module({
-	imports: [ TypeOrmModule.forRoot(), UsersModule, ConfessModule, CommentModule, UsersModule ],
-	controllers: [ AppController, CommentController, UsersController, ConfessController ],
-	providers: [
-		AppService,
-		CommentService,
-		UsersService,
-		ConfessService
-		// ...databaseProviders
-	],
-	exports: [
-		// UsersModule, ConfessModule, CommentModule
-		// ...databaseProviders
-	]
+  imports: [
+    TypeOrmModule.forRoot(),
+    UsersModule,
+    ConfessModule,
+    CommentModule,
+    UsersModule,
+  ],
+  controllers: [
+    AppController,
+    CommentController,
+    UsersController,
+    ConfessController,
+  ],
+  providers: [AppService, CommentService, UsersService, ConfessService],
+  exports: [UsersModule, ConfessModule, CommentModule],
 })
 export class AppModule {}
