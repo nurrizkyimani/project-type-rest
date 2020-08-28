@@ -1,4 +1,4 @@
-import { Controller, Param, Get, Post } from '@nestjs/common';
+import { Controller, Param, Get, Post, Res } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -6,11 +6,16 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get(':id')
-  showUserbyId(
+  async showUserbyId(
     @Param('id')
     uid: string,
+
+    // @Res() res: Response,
   ) {
-    return this.usersService.whoAmI(uid);
+    const userident = await this.usersService.whoAmI(uid);
+
+    console.log('this is user ', userident);
+    return `this is ${userident}`;
   }
 
   @Post(':id')

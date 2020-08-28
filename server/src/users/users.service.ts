@@ -10,9 +10,13 @@ export class UsersService {
       .then(function(userRecord) {
         // See the UserRecord reference doc for the contents of userRecord.
 
-        console.log('Successfully fetched user data:', userRecord.toJSON());
+        // console.log('Successfully fetched user data:', userRecord.toJSON());
 
-        return userRecord.toJSON();
+        const userRecording = userRecord.providerData[0].toJSON();
+        console.log(userRecording);
+        return {
+          userRecording,
+        };
       })
       .catch(function(error) {
         console.log('Error fetching user data:', error);
