@@ -13,7 +13,4 @@ export class UserEntity {
 		type: 'text'
 	})
 	username: string;
-
-	@OneToMany((type) => ConfessEntity, (confess) => confess.author)
-	confess: ConfessEntity[];
 }

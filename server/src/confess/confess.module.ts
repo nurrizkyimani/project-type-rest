@@ -9,9 +9,12 @@ import { UserEntity } from 'src/users/users.entity';
 import { UsersService } from 'src/users/users.service';
 
 @Module({
-	imports: [ TypeOrmModule.forRoot(), TypeOrmModule.forFeature([ ConfessEntity, CommentEntity, UserEntity ]) ],
-	controllers: [ ConfessController ],
-	providers: [ ConfessService, UsersService, ConfessService ],
-	exports: [ TypeOrmModule ]
+  imports: [
+    TypeOrmModule.forRoot(),
+    TypeOrmModule.forFeature([ConfessEntity, CommentEntity, UserEntity]),
+  ],
+  controllers: [ConfessController],
+  providers: [ConfessService, UsersService, ConfessService, UserEntity],
+  exports: [TypeOrmModule],
 })
 export class ConfessModule {}

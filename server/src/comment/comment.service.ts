@@ -23,14 +23,6 @@ export class CommentService {
 	async createComment(confessId: string, userId: string, data: commentDTO) {
 		const confess = await this.confessRepository.findOne({ where: { id: confessId } });
 		const user = await this.userRepository.findOne({ where: { id: userId } });
-
-		const comment = await this.commentRepository.create({
-			...data,
-			confess,
-			author: user
-		});
-		await this.commentRepository.save(comment);
-		return this.toResponseObject(comment);
 	}
 
 	async deleteComment(id: string, userId: string) {
@@ -50,9 +42,9 @@ export class CommentService {
 			relations: [ 'author', 'idea' ]
 		});
 
-		if (comment.author.id !== userId) {
-			throw new HttpException('You do not own this comment', 500);
-		}
+		// if (comment.author.id !== userId) {
+		// 	throw new HttpException('You do not own this comment', 500);
+		// }
 
 		await this.commentRepository.remove(comment);
 		return this.toResponseObject(comment);

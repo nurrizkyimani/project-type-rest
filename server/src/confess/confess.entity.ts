@@ -1,38 +1,22 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 
 import { CommentEntity } from 'src/comment/comment.entity';
 import { UserEntity } from 'src/users/users.entity';
 
 @Entity('confess')
 export class ConfessEntity {
-  @PrimaryGeneratedColumn('uuid') confess_id: string;
+	@PrimaryGeneratedColumn('uuid') confess_id: string;
 
-  @CreateDateColumn() created: Date;
+	@CreateDateColumn() created: Date;
 
-  @Column('text') title: string;
+	@Column('text') title: string;
 
-  @Column('text') desc: string;
+	@Column('text') desc: string;
 
-  @Column('boolean') is_publish: boolean;
+	@Column('boolean') is_publish: boolean;
 
-  @ManyToOne(
-    type => UserEntity,
-    author => author.confess,
-  )
-  author: UserEntity;
+	@Column('text') uid: string;
 
-  @OneToMany(
-    type => CommentEntity,
-    comment => comment.confess,
-    { cascade: true },
-  )
-  comments: CommentEntity[];
+	@OneToMany((type) => CommentEntity, (comment) => comment.confess, { cascade: true })
+	comments: CommentEntity[];
 }
