@@ -1,6 +1,5 @@
 # project-type-rest
 
-A project build using TypeScript and Firebase Cloud Function
 
 
 <p align="center">
@@ -31,7 +30,7 @@ A project build using TypeScript and Firebase Cloud Function
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A project build using TypeScript and Firebase Cloud Function, Firebase Admin SDK for Authentication. Create a website for post your confession.
 
 ## Installation
 
