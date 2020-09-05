@@ -1,10 +1,20 @@
-import { Controller, Get, Post, Put, Delete, HostParam, Body, Param, Logger } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, HostParam, Body, Param, Logger, UseGuards } from '@nestjs/common';
 import { ConfessService } from './confess.service';
 import { confessDTO } from './confess.dto';
+import { AuthGuard } from 'shared/auth.guard';
 
 @Controller('confess')
 export class ConfessController {
 	constructor(private confessService: ConfessService) {}
+
+	@Get('confesstest')
+	@UseGuards(new AuthGuard())
+	async showUserTest() {
+		return {
+			status: true,
+			desc: 'test is done'
+		};
+	}
 
 	@Get()
 	showAllConfess() {

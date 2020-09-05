@@ -14,11 +14,11 @@ import { UserDTO } from './users.dto';
 import { AuthGuard } from 'shared/auth.guard';
 
 @Controller('users')
+@UseGuards(new AuthGuard())
 export class UsersController {
 	constructor(private usersService: UsersService) {}
 
 	@Get('usertest')
-	@UseGuards(new AuthGuard())
 	async showUserTest() {
 		return {
 			status: true
