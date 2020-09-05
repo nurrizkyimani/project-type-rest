@@ -14,8 +14,8 @@ import { UserDTO } from './users.dto';
 import { AuthGuard } from 'shared/auth.guard';
 
 @Controller('users')
-@UseGuards(new AuthGuard())
-export class UsersController {
+export // @UseGuards(new AuthGuard())
+class UsersController {
 	constructor(private usersService: UsersService) {}
 
 	@Get('usertest')
@@ -25,11 +25,19 @@ export class UsersController {
 		};
 	}
 
-	@Get(':id')
-	async showUserbyId(@Param('id') uid: string) {
+	@Get('whoami/:id')
+	async whoAmI(@Param('id') uid: string) {
 		const userident = await this.usersService.whoAmI(uid);
 		console.log(userident);
 
 		return { status: true, data: userident };
+	}
+
+	@Get(':id')
+	async showUserById(@Param('id') uid: string) {
+		const useridentification = await this.usersService.whoAmI(uid);
+		console.log(useridentification);
+
+		return useridentification;
 	}
 }
