@@ -1,31 +1,35 @@
 import {
-  Controller,
-  Param,
-  Get,
-  Post,
-  Res,
-  UseInterceptors,
-  ClassSerializerInterceptor,
+	Controller,
+	Param,
+	Get,
+	Post,
+	Res,
+	UseInterceptors,
+	ClassSerializerInterceptor,
+	UseGuards
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import * as admin from 'firebase-admin';
 import { UserDTO } from './users.dto';
+import { AuthGuard } from 'shared/auth.guard';
 
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+	constructor(private usersService: UsersService) {}
 
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Get(':id')
-  async showUserbyId(@Param('id') uid: string) {
-    const userident = await this.usersService.whoAmI(uid);
-    console.log(userident);
+	@Get('usertest')
+	@UseGuards(new AuthGuard())
+	async showUserTest() {
+		return {
+			status: true
+		};
+	}
 
-    return { status: true, data: userident };
-  }
+	@Get(':id')
+	async showUserbyId(@Param('id') uid: string) {
+		const userident = await this.usersService.whoAmI(uid);
+		console.log(userident);
 
-  @Post(':id')
-  showUserbyTest(@Param('id') username: string) {
-    return `this is post ${username}`;
-  }
+		return { status: true, data: userident };
+	}
 }

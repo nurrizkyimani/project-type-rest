@@ -9,7 +9,7 @@ export class CommentEntity {
 
 	@Column('text') comment: string;
 
-	@Column('text') uid: string;
+	@Column('text') userid: string;
 
 	@ManyToOne((type) => ConfessEntity, (confess) => confess.comments)
 	confess: ConfessEntity;

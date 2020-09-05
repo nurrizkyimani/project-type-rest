@@ -15,7 +15,7 @@ export class ConfessEntity {
 
 	@Column('boolean') is_publish: boolean;
 
-	@Column('text') uid: string;
+	@Column('text') userid: string;
 
 	@OneToMany((type) => CommentEntity, (comment) => comment.confess, { cascade: true })
 	comments: CommentEntity[];
