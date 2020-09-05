@@ -5,22 +5,24 @@ import { User } from 'src/users/user.decorator';
 import { commentDTO } from './comment.dto';
 import { DataSnapshot } from 'firebase-functions/lib/providers/database';
 
-@Controller('comment')
+@Controller('api/comments')
 export class CommentController {
 	constructor(private commentService: CommentService) {}
 
+	// @Get('all')
+
 	@Get('confess/:id')
-	showAllComment(@Param('id') confess: string) {
-		this.commentService.showAllCommentPerConfessId(confess);
+	showCommentByConfess(@Param('id') confess: string) {
+		return this.commentService.showCommentByConfess(confess);
 	}
 
-	@Post('idea/id')
-	createComment(@Param('id') confess: string, @User('id') user: string, @Body() data: commentDTO) {
-		this.commentService.createComment(confess, user, data);
+	@Post('confess/:id')
+	createComment(@Param('id') confess: string, @Body() data: commentDTO) {
+		return this.commentService.createComment(confess, data);
 	}
 
 	@Delete(':id')
 	deleteComment(@Param('id') id: string, @User('id') user: string) {
-		this.commentService.deleteComment(id, user);
+		return this.commentService.deleteComment(id, user);
 	}
 }

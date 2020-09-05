@@ -1,15 +1,23 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { ConfessEntity } from './confess.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { confessDTO } from './confess.dto';
+import { CommentEntity } from 'src/comment/comment.entity';
 
 @Injectable()
 export class ConfessService {
-	constructor(@InjectRepository(ConfessEntity) private confessRepository: Repository<ConfessEntity>) {}
+	constructor(
+		@InjectRepository(ConfessEntity) private confessRepository: Repository<ConfessEntity>,
+		@InjectRepository(CommentEntity) private commentRepository: Repository<CommentEntity>
+	) {}
 
 	async showAllConfess() {
-		return this.confessRepository.find();
+		return await this.confessRepository.find();
+	}
+
+	async showAllWithRelation() {
+		return await this.confessRepository.find({ relations: [ 'comments' ] });
 	}
 
 	async createConfess(data: confessDTO) {
@@ -19,7 +27,7 @@ export class ConfessService {
 	}
 
 	async findOneConfess(id: string) {
-		const confess_one = await this.confessRepository.findOne({ where: { id } });
+		const confess_one = await this.confessRepository.findOne({ where: { confess_id: id } });
 		return confess_one;
 	}
 

@@ -1,5 +1,5 @@
 export interface confessDTO {
-  title: string;
-  desc: string;
-  is_publish: boolean;
+	title: string;
+	desc: string;
+	is_publish: boolean;
 }

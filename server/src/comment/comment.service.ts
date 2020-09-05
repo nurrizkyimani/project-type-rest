@@ -1,4 +1,4 @@
-import { Injectable, Logger, Inject, HttpException } from '@nestjs/common';
+import { Injectable, Logger, Inject, HttpException, HttpCode, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommentEntity } from './comment.entity';
 import { Repository } from 'typeorm';
@@ -10,23 +10,61 @@ import { ConfessEntity } from 'src/confess/confess.entity';
 export class CommentService {
 	constructor(
 		@InjectRepository(CommentEntity) private commentRepository: Repository<CommentEntity>,
-		@InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
 		@InjectRepository(ConfessEntity) private confessRepository: Repository<ConfessEntity>
 	) {}
 
-	showAllCommentPerConfessId(confessid: String) {
-		return this.commentRepository.findOne({
-			where: { author: { id: confessid } }
+	async show(id: string) {
+		const comment = await this.commentRepository.findOne({
+			where: { id },
+			relations: [ 'confess' ]
 		});
+
+		return this.toResponseObject(comment);
 	}
 
-	async createComment(confessId: string, userId: string, data: commentDTO) {
-		const confess = await this.confessRepository.findOne({ where: { id: confessId } });
-		const user = await this.userRepository.findOne({ where: { id: userId } });
+	async showCommentByConfess(confessid: string) {
+		const idea = await this.confessRepository.findOne({
+			where: { confess_id: confessid },
+			relations: [ 'comments', 'comments.confess' ]
+		});
+
+		return idea.comments;
+	}
+
+	async createComment(confess_id: string, data: commentDTO) {
+		try {
+			const confess = await this.confessRepository.findOne({
+				where: { confess_id }
+			});
+			const commentCreate = await this.commentRepository.create({
+				...data,
+				confess
+			});
+			await this.commentRepository.save(commentCreate);
+			return commentCreate;
+		} catch (error) {
+			console.log(error);
+			return error;
+		}
 	}
 
 	async deleteComment(id: string, userId: string) {
-		Logger.log('delete comment');
+		try {
+			const comment = await this.commentRepository.findOne({
+				where: { id },
+				relations: [ 'confess' ]
+			});
+
+			if (comment.userid != userId) {
+				throw new HttpException('comment with not your id ', HttpStatus.UNAUTHORIZED);
+			}
+
+			await this.commentRepository.remove(comment);
+			return comment;
+		} catch (error) {
+			console.log(error);
+			return error;
+		}
 	}
 
 	private toResponseObject(comment: CommentEntity) {
@@ -42,9 +80,9 @@ export class CommentService {
 			relations: [ 'author', 'idea' ]
 		});
 
-		// if (comment.author.id !== userId) {
-		// 	throw new HttpException('You do not own this comment', 500);
-		// }
+		if (comment.userid !== userId) {
+			throw new HttpException('You do not own this comment', 500);
+		}
 
 		await this.commentRepository.remove(comment);
 		return this.toResponseObject(comment);

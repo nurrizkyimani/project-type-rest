@@ -21,6 +21,11 @@ export class ConfessController {
 		return this.confessService.showAllConfess();
 	}
 
+	@Get('/showrelation')
+	showAllWithRelation() {
+		return this.confessService.showAllWithRelation();
+	}
+
 	@Get(':id')
 	showEachConfess(@Param('id') id: string) {
 		return this.confessService.findOneConfess(id);
