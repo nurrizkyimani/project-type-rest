@@ -10,7 +10,7 @@ import { UsersService } from 'src/users/users.service';
 
 @Module({
 	imports: [ TypeOrmModule.forFeature([ CommentEntity, ConfessEntity, UserEntity ]) ],
-	providers: [ CommentService ],
+	providers: [ CommentService, UsersService ],
 	controllers: [ CommentController ],
 	exports: [ TypeOrmModule ]
 })
