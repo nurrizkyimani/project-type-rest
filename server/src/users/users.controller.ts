@@ -11,7 +11,7 @@ import {
 import { UsersService } from './users.service';
 import * as admin from 'firebase-admin';
 import { UserDTO } from './users.dto';
-import { AuthGuard } from 'shared/auth.guard';
+import { AuthGuard } from 'src/shared/auth.guard';
 
 @Controller('users')
 export // @UseGuards(new AuthGuard())

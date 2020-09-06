@@ -30,13 +30,6 @@ export class CommentService {
 	}
 
 	async show(id: string) {
-		const comment = await this.commentRepository.findOne({
-			where: { id },
-			relations: [ 'confess' ]
-		});
-
-		return this.toResponseObject(comment);
-
 		// kalau cuma confess aja ga pakai "confess.comment" di confess object ga ada "comments".
 		// 	{
 		//   "id": "4b1bba28-59d5-4e1c-8a97-9797d9ecd304",
@@ -52,6 +45,12 @@ export class CommentService {
 		//       "userid": "eFJBsTnzoscoVoZz5iW4bi60jmo1"
 		//   }
 		// }
+		const comment = await this.commentRepository.findOne({
+			where: { id },
+			relations: [ 'confess' ]
+		});
+
+		return this.toResponseObject(comment);
 	}
 
 	async showCommentByConfess(confessid: string) {
@@ -80,22 +79,26 @@ export class CommentService {
 		}
 	}
 
-	async deleteComment(id: string, userId: string) {
+	async deleteComment(
+		id: string
+		// , userId: string
+	) {
 		try {
 			const comment = await this.commentRepository.findOne({
 				where: { id },
 				relations: [ 'confess' ]
 			});
 
-			if (comment.userid != userId) {
-				throw new HttpException('comment with not your id ', HttpStatus.UNAUTHORIZED);
-			}
+			// if (comment.userid != userId) {
+			// 	throw new HttpException('comment with not your id ', HttpStatus.UNAUTHORIZED);
+			// }
 
 			await this.commentRepository.remove(comment);
 			return comment;
 		} catch (error) {
 			console.log(error);
-			return error;
+			// return error;
+			throw new HttpException('Not Found ', HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -106,15 +109,18 @@ export class CommentService {
 		};
 	}
 
-	async destroy(id: string, userId: string) {
+	async destroy(
+		id: string
+		// userId: string
+	) {
 		const comment = await this.commentRepository.findOne({
 			where: { id },
 			relations: [ 'author', 'idea' ]
 		});
 
-		if (comment.userid !== userId) {
-			throw new HttpException('You do not own this comment', 500);
-		}
+		// if (comment.userid !== userId) {
+		// 	throw new HttpException('You do not own this comment', 500);
+		// }
 
 		await this.commentRepository.remove(comment);
 		return this.toResponseObject(comment);

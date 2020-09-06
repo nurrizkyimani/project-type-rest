@@ -31,7 +31,13 @@ export class CommentController {
 	}
 
 	@Delete(':id')
-	deleteComment(@Param('id') id: string, @User('id') user: string) {
-		return this.commentService.deleteComment(id, user);
+	deleteComment(
+		@Param('id') id: string
+		// @User('uid') user: string
+	) {
+		return this.commentService.deleteComment(
+			id
+			// ,user
+		);
 	}
 }
