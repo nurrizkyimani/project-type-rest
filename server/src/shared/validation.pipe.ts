@@ -43,7 +43,7 @@ export class ValidationPipe implements PipeTransform {
   private formatErrors(errors: any[]) {
     errors
       .map(err => {
-        for (let property in err.constraints) {
+        for (const property in err.constraints) {
           return err.constraints[property];
         }
       })

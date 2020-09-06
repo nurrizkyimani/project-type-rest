@@ -78,5 +78,9 @@
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "main": "dist/index.js",
+  "engines": {
+    "node": "12"
   }
 }

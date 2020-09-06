@@ -137,9 +137,7 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-.env.test
+
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -196,6 +194,10 @@ ormconfig.json
 
 just.env
 
-serviceAccountKey.json
+.env
 
+dotenv environment variables file
+.env.test
+
+serviceAccountKey.json
 .DS_Store

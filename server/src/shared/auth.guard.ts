@@ -40,7 +40,7 @@ export class AuthGuard implements CanActivate {
 			// console.log(`real token is  ${real_token}`);
 
 			const decodedToken = await admin.auth().verifyIdToken(real_token);
-			let uid = decodedToken.uid;
+			const uid = decodedToken.uid;
 			console.log(uid);
 
 			return {
