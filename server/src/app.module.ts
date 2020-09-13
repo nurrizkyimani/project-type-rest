@@ -19,23 +19,21 @@ import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { UserEntity } from './users/users.entity';
 import { ConfigModule } from '@nestjs/config';
+import { Connection } from 'typeorm';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot(),
-    UsersModule,
-    ConfessModule,
-    CommentModule,
-    UsersModule,
-  ],
-  controllers: [
-    AppController,
-    CommentController,
-    UsersController,
-    ConfessController,
-  ],
-  providers: [AppService, CommentService, UsersService, ConfessService],
-  exports: [UsersModule, ConfessModule, CommentModule],
+	imports: [
+		ConfigModule.forRoot(),
+		TypeOrmModule.forRoot(),
+		UsersModule,
+		ConfessModule,
+		CommentModule,
+		UsersModule
+	],
+	controllers: [ AppController, CommentController, UsersController, ConfessController ],
+	providers: [ AppService, CommentService, UsersService, ConfessService ],
+	exports: [ UsersModule, ConfessModule, CommentModule ]
 })
-export class AppModule {}
+export class AppModule {
+	constructor(private connection: Connection) {}
+}

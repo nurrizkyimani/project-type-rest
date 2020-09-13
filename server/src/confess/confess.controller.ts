@@ -10,11 +10,13 @@ import {
   Logger,
   UseGuards,
   UsePipes,
+  Query,
 } from '@nestjs/common';
 import { ConfessService } from './confess.service';
 import { confessDTO } from './confess.dto';
 import { AuthGuard } from 'src/shared/auth.guard';
 import { ValidationPipe } from 'src/shared/validation.pipe';
+import { ContextIdFactory } from '@nestjs/core';
 
 @Controller('confess')
 export class ConfessController {
@@ -36,8 +38,9 @@ export class ConfessController {
   }
 
   @Get()
-  showAllConfess() {
-    return this.confessService.showAllConfess();
+  showAllConfess(@Query('page') page: number) {
+    Logger.log(`Page number ${page}`, 'QueryLog');
+    return this.confessService.showAllConfess(page);
   }
 
   @Get('showrelation')
